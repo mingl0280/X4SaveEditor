@@ -1,0 +1,79 @@
+﻿<Window x:Class="X4SaveEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:X4SaveEditor"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="1080" Width="1920">
+    <Window.Resources>
+        <local:BoolToVisConverter x:Key="BoolToVisConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <!-- 2 columns: (45%, %35) -->
+            <ColumnDefinition Width="0.45*"/>
+            <ColumnDefinition Width="0.35*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <!-- two rows: last row fixed to bottom-->
+            <RowDefinition Height="0.9*"/>
+            <RowDefinition Height="0.05*"/>
+        </Grid.RowDefinitions>
+        <!-- Left nav area -->
+        <Grid x:Name="nav">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.05*"/>
+                <RowDefinition Height="0.9*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Nav" FontSize="24" Grid.Row="0"/>
+
+            <TreeView x:Name="MainTreeView" Grid.Row="2" Margin="5" ItemsSource="{Binding RootItem.Children}" SelectedItemChanged="MainTreeView_SelectedItemChanged">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                        <TextBlock Text="{Binding Name}"/>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+        </Grid>
+        <Grid x:Name="attributes" Grid.Row="0" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.05*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Attributes" FontSize="24" Grid.Row="0"/>
+            <ListView ItemsSource="{Binding SelectedNode.Attributes}" Grid.Row="1" Margin="10">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Key" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Key, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Value" Width="600">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+        <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock VerticalAlignment="Center">Save Location: </TextBlock>
+                <TextBox Text="{Binding SaveLocation}" Width="300" Height="32"></TextBox>
+                <Button x:Name="btnBrowse" Content="Browse" Click="Browse_Click" Height="32" Width="82" Margin="5 0"></Button>
+                <Button x:Name="btnLoad" Content="Load" Click="Load_Click" Height="32" Width="82" Margin="5 0" IsEnabled="False"></Button>
+                <Button x:Name="btnChangeRespawn" Content="Change Mineral Respawn Rates" Click="btnChangeRespawn_Click" Height="32" Width="82" Margin="150 0 5 0" IsEnabled="False"></Button>
+                <Button x:Name="btnSave" Content="Save" Click="Save_Click" Height="32" Width="82" Margin="150 0 5 0" IsEnabled="False"></Button>
+                <TextBlock x:Name="loading_text" Visibility="{Binding LoadingFlag, Converter={StaticResource BoolToVisConverter}}" FontSize="32"  Text="{Binding LoadingText}" ></TextBlock>
+                <Button Content="Close" Click="Close_Click" Height="32" Width="82" Margin="5 0"></Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
