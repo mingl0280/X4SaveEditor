@@ -69,7 +69,7 @@
                 <TextBox Text="{Binding SaveLocation}" Width="300" Height="32"></TextBox>
                 <Button x:Name="btnBrowse" Content="Browse" Click="Browse_Click" Height="32" Width="82" Margin="5 0"></Button>
                 <Button x:Name="btnLoad" Content="Load" Click="Load_Click" Height="32" Width="82" Margin="5 0" IsEnabled="False"></Button>
-                <Button x:Name="btnChangeRespawn" Content="Change Mineral Respawn Rates" Click="btnChangeRespawn_Click" Height="32" Width="82" Margin="150 0 5 0" IsEnabled="False"></Button>
+                <Button x:Name="btnChangeRespawn" Content="Change Mineral Respawn Rates" Click="btnChangeRespawn_Click" Height="32" Width="182" Margin="150 0 5 0" IsEnabled="False"></Button>
                 <Button x:Name="btnSave" Content="Save" Click="Save_Click" Height="32" Width="82" Margin="150 0 5 0" IsEnabled="False"></Button>
                 <TextBlock x:Name="loading_text" Visibility="{Binding LoadingFlag, Converter={StaticResource BoolToVisConverter}}" FontSize="32"  Text="{Binding LoadingText}" ></TextBlock>
                 <Button Content="Close" Click="Close_Click" Height="32" Width="82" Margin="5 0"></Button>
